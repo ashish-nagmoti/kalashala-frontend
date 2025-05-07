@@ -2,8 +2,9 @@
  * API utilities for making requests to the backend
  */
 
-// Get the API URL from environment variables, or use localhost for development
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// Get the API URL from environment variables, or use the PythonAnywhere URL for production
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://kalashala.pythonanywhere.com';
+// Replace 'yourusername' with your actual PythonAnywhere username
 
 /**
  * Make an API request with fetch
