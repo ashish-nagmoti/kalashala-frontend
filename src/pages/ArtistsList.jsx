@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
+import { enhancedFetch } from "../utils/apiHelpers"
 
 const ArtistsList = () => {
   const [artists, setArtists] = useState([])
@@ -19,7 +20,7 @@ const ArtistsList = () => {
   useEffect(() => {
     const getCsrfToken = async () => {
       try {
-        const response = await fetch("http://localhost:8000/custom_auth/get-csrf-token/", {
+        const response = await enhancedFetch("/custom_auth/get-csrf-token/", {
           method: "GET",
           credentials: "include",
         });
@@ -43,7 +44,7 @@ const ArtistsList = () => {
       setError(null);
       
       try {
-        const response = await fetch("http://localhost:8000/custom_auth/artists/", {
+        const response = await enhancedFetch("/custom_auth/artists/", {
           method: "GET",
           credentials: "include",
           headers: {

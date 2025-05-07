@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Link, NavLink } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
+import { enhancedFetch, ensureCorrectApiUrl } from "../utils/apiHelpers"
 
 const Blog = () => {
   const [content, setContent] = useState([]);
@@ -20,7 +21,7 @@ const Blog = () => {
       try {
         setIsLoading(true);
         // Updated endpoint to exclude course modules
-        const response = await fetch('http://localhost:8000/blog/content/?exclude_course_content=true', {
+        const response = await enhancedFetch('/blog/content/?exclude_course_content=true', {
           credentials: 'include'
         });
         
@@ -210,9 +211,11 @@ const Blog = () => {
                           item.thumbnail 
                           ? (item.thumbnail.startsWith('http') 
                              ? item.thumbnail 
-                             : item.thumbnail.startsWith('/media') 
-                               ? `http://localhost:8000${item.thumbnail}` 
-                               : `http://localhost:8000/media/${item.thumbnail}`)
+                             : ensureCorrectApiUrl(
+                                 item.thumbnail.startsWith('/media')
+                                   ? item.thumbnail
+                                   : `/media/${item.thumbnail}`
+                               ))
                           : "/placeholder.svg"
                         }
                         alt={item.title}

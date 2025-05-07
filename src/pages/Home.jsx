@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
+import { API_BASE_URL } from "../utils/api"
+import { enhancedFetch, ensureCorrectApiUrl } from "../utils/apiHelpers"
 
 const Home = () => {
   const [featuredArtists, setFeaturedArtists] = useState([])
@@ -15,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     const getCsrfToken = async () => {
       try {
-        const response = await fetch("http://localhost:8000/custom_auth/get-csrf-token/", {
+        const response = await enhancedFetch("/custom_auth/get-csrf-token/", {
           method: "GET",
           credentials: "include",
         });
@@ -39,7 +41,7 @@ const Home = () => {
       setError(null);
       
       try {
-        const response = await fetch("http://localhost:8000/custom_auth/artists/", {
+        const response = await enhancedFetch("/custom_auth/artists/", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -75,7 +77,7 @@ const Home = () => {
       setCoursesError(null);
       
       try {
-        const response = await fetch("http://localhost:8000/blog/courses/", {
+        const response = await enhancedFetch("/blog/courses/", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -124,10 +126,10 @@ const Home = () => {
       }
       // Check if the thumbnail already starts with /media
       if (course.thumbnail.startsWith('/media')) {
-        return `http://localhost:8000${course.thumbnail}`;
+        return ensureCorrectApiUrl(course.thumbnail);
       }
       // Otherwise assume it's a relative path that needs the full URL
-      return `http://localhost:8000/media/${course.thumbnail}`;
+      return ensureCorrectApiUrl(`/media/${course.thumbnail}`);
     }
     return "/placeholder.svg?height=200&width=300"; // Default placeholder
   };

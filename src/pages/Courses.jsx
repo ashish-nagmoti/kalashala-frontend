@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import SearchBar from "../components/SearchBar"
 import { Play, Star, Plus } from "lucide-react"
+import { enhancedFetch, ensureCorrectApiUrl } from "../utils/apiHelpers"
 
 const Courses = () => {
   const [courses, setCourses] = useState([])
@@ -22,7 +23,7 @@ const Courses = () => {
       setIsLoading(true)
       try {
         console.log("Fetching courses from API...")
-        const response = await fetch("http://localhost:8000/blog/list/?content_type=course", {
+        const response = await enhancedFetch("/blog/list/?content_type=course", {
           credentials: "include",
         })
         
@@ -55,7 +56,9 @@ const Courses = () => {
               description: course.description,
               instructor: course.contributor?.name || 'Anonymous',
               thumbnail: course.thumbnail 
-                ? `http://localhost:8000/media/${course.thumbnail}` 
+                ? ensureCorrectApiUrl(course.thumbnail.startsWith('/media')
+                    ? course.thumbnail
+                    : `/media/${course.thumbnail}`)
                 : "/placeholder.svg?height=200&width=300",
               rating: 4.5, // Default rating if not available in API
               reviews: Math.floor(Math.random() * 100) + 10, // Default reviews count if not available
