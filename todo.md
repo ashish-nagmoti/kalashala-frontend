@@ -1,0 +1,9 @@
+- improve profile
+- improve portfolio
+- improve chatbot
+- improve course
+- wp integration
+- few more things
+- data rep page, state ,art contetn , form
+- blo maker, artist , nift student
+- 

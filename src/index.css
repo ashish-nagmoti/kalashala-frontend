@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1a1a1a;
+  --secondary: #333333;
+  --accent: #ff6b6b;
+  --background: #f5f5f5;
+  --text: #333333;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+  background-color: var(--background);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-black border border-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+  }
+
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold mb-6;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
